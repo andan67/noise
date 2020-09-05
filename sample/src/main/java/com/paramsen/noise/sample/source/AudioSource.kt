@@ -3,9 +3,9 @@ package com.paramsen.noise.sample.source
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.nio.FloatBuffer
 
 const val RATE_HZ = 44100

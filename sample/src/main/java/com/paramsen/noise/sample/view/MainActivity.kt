@@ -17,10 +17,10 @@ import androidx.appcompat.view.menu.ActionMenuItemView
 import com.paramsen.noise.Noise
 import com.paramsen.noise.sample.R
 import com.paramsen.noise.sample.source.AudioSource
-import io.reactivex.Flowable
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.Function
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.functions.Function
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         //AudioView
         disposable.add(src.observeOn(Schedulers.newThread())
                 .doOnNext { p0.next() }
-                .subscribe(audioView::onWindow, { e -> Log.e(TAG, e.message) }))
+                .subscribe(audioView::onWindow, { e -> e.message?.let { Log.e(TAG, it) } }))
         //FFTView
         disposable.add(src.observeOn(Schedulers.newThread())
                 .doOnNext { p1.next() }
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 .subscribe({ fft ->
                     fftHeatMapView.onFFT(fft)
                     fftBandView.onFFT(fft)
-                }, { e -> Log.e(TAG, e.message) }))
+                }, { e -> e.message?.let { Log.e(TAG, it) } }))
 
         tip.schedule()
     }
@@ -157,7 +157,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         info.onShow()
 
         return true
